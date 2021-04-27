@@ -1,0 +1,28 @@
+.ufields{
+    min-width: 300px;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+#form2field input {
+    width: 100%;
+    border: 1px solid #ddd;
+    margin: 0;
+    min-height: 50px;
+    max-height: 50px;
+    padding: inherit;
+    margin-bottom: 10px;
+}
+input#form2field-subtn {
+    border-style: none;
+    min-height: 50px;
+    max-height: 50px;
+    margin-top: 10px;
+    padding: initial;
+}
+input#form2field-subtn:hover{
+    transition: .3s;
+}
+#form2field input:active, #form2field input:focus{
+    outline: none;
+}
