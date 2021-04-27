@@ -31,12 +31,12 @@ function activate_form2field_cplgn(){
     global $wpdb;
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
-    $form2field_v1 = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}form2field_v1` (
+    $form2field_v1 = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}form2field__v1` (
         `ID` INT NOT NULL AUTO_INCREMENT,
         `user_id` INT NOT NULL,
         `username` VARCHAR(255) NOT NULL,
-        `field` VARCHAR(255) NOT NULL,
-        `account_number` INT NOT NULL,
+        `account1` INT NOT NULL,
+        `account2` INT NOT NULL,
         PRIMARY KEY (`ID`)) ENGINE = InnoDB";
         dbDelta($form2field_v1);
 }
@@ -125,17 +125,29 @@ add_action("wp_ajax_nopriv_form2field_data_check", "form2field_data_check");
 function form2field_data_check(){
     if(wp_verify_nonce( $_POST['nonce'], 'nonces' )){
         global $wpdb,$current_user;
-        $number = intval($_POST['number']);
-        $field = sanitize_text_field($_POST['field']);
+        $number_1 = intval($_POST['number_1']);
+        $number_2 = intval($_POST['number_2']);
 
-        if(!empty($number) && !empty($field)){
-            $table = $wpdb->prefix.'form2field_v1';
+        if(!empty($number_1)){
+            $table = $wpdb->prefix.'form2field__v1';
             $data = $wpdb->get_row("SELECT * FROM $table WHERE user_id = $current_user->ID");
 
             if($data){
-                $wpdb->update($table, array('account_number' => $number,'field' => $field ),array("user_id" => $current_user->ID),array('%d','%s'),array('%d'));
+                $wpdb->update($table, array(
+                    'account1' => $number_1,
+                    'account2' => $number_2,
+                    'username' => $current_user->display_name 
+                ),array(
+                    "user_id" => $current_user->ID
+                ),array('%d','%d','%s'),array('%d'));
+
             }else{
-                $wpdb->insert($table, array('user_id' => $current_user->ID,'account_number' => $number, 'username' => $current_user->display_name, 'field' => $field, ),array('%d','%d','%s','%s')); 
+                $wpdb->insert($table, array(
+                    'user_id' => $current_user->ID,
+                    'account1' => $number_1,
+                    'account2' => $number_2,
+                    'username' => $current_user->display_name
+                ),array('%d','%d','%d','%s')); 
             }
 
             if ( !is_wp_error( $wpdb ) ) {
