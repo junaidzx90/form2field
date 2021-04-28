@@ -11,7 +11,7 @@ function form2field_output($atts){
             ?>
 
             <label for="ac_number_1">Account Number 1</label>
-            <input type="number" id="ac_number_1" name="ac_number_1" placeholder="Account Number 1" value="<?php echo ((!empty($data->account1) || $data->account1 != 0)? __($data->account1, 'field-form') : ''); ?>" <?php echo (empty($data->account1)? 'required' : ''); ?>>
+            <input type="number" id="ac_number_1" name="ac_number_1" placeholder="Account Number 1" value="<?php echo ((!empty($data->account1) || $data->account1 != 0)? __($data->account1, 'field-form') : ''); ?>" <?php echo (empty($data->account1)? 'required' : 'readonly'); ?>>
 
             <label for="ac_number_2">Account Number 2 <span class="optional">(Optional)</span></label>
             <input type="number" id="ac_number_2" name="ac_number_2" placeholder="Account Number 2" value="<?php echo ((!empty($data->account2) || $data->account2 != 0)? __($data->account2, 'field-form') : ''); ?>">

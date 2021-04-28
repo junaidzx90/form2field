@@ -9,8 +9,8 @@ jQuery(function ($) {
             $('#ac_number_1').css('border', '1px solid red');
             return false;
         }
-        $('#ac_number_1').css('border', '1px solid #ddd');
 
+        $('#ac_number_1').css('border', '1px solid #ddd');
         $.ajax({
             type: "post",
             url: form2field_actions.ajaxurl,

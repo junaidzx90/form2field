@@ -128,37 +128,33 @@ function form2field_data_check(){
         $number_1 = intval($_POST['number_1']);
         $number_2 = intval($_POST['number_2']);
 
-        if(!empty($number_1)){
-            $table = $wpdb->prefix.'form2field__v1';
-            $data = $wpdb->get_row("SELECT * FROM $table WHERE user_id = $current_user->ID");
+        $table = $wpdb->prefix.'form2field__v1';
+        $data = $wpdb->get_row("SELECT * FROM $table WHERE user_id = $current_user->ID");
 
-            if($data){
-                $wpdb->update($table, array(
-                    'account1' => $number_1,
-                    'account2' => $number_2,
-                    'username' => $current_user->display_name 
-                ),array(
-                    "user_id" => $current_user->ID
-                ),array('%d','%d','%s'),array('%d'));
+        if($data){
+            $wpdb->update($table, array(
+                'account2' => $number_2,
+                'username' => $current_user->display_name 
+            ),array(
+                "user_id" => $current_user->ID
+            ),array('%d','%d','%s'),array('%d'));
 
-            }else{
-                $wpdb->insert($table, array(
-                    'user_id' => $current_user->ID,
-                    'account1' => $number_1,
-                    'account2' => $number_2,
-                    'username' => $current_user->display_name
-                ),array('%d','%d','%d','%s')); 
-            }
-
-            if ( !is_wp_error( $wpdb ) ) {
-                echo wp_json_encode(array('success' => 'Success'));
-                wp_die();
-            }else{
-                echo wp_json_encode(array('error' => 'Error.'));
-                wp_die();
-            }
+        }else{
+            $wpdb->insert($table, array(
+                'user_id' => $current_user->ID,
+                'account1' => $number_1,
+                'account2' => $number_2,
+                'username' => $current_user->display_name
+            ),array('%d','%d','%d','%s')); 
         }
-        
+
+        if ( !is_wp_error( $wpdb ) ) {
+            echo wp_json_encode(array('success' => 'Success'));
+            wp_die();
+        }else{
+            echo wp_json_encode(array('error' => 'Error.'));
+            wp_die();
+        }
         wp_die();
     }
     wp_die();
